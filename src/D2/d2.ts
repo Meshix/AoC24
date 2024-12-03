@@ -45,13 +45,11 @@ export function solvePart2(input: string): number {
     let counter: number = 0;
             
     for(const arr of reports) {
-        // Check if sequence is already valid
         if (isValidSequence(arr)) {
             counter++;
             continue;
         }
 
-        // Try removing each element one at a time
         for (let i = 0; i < arr.length; i++) {
             const newArr = [...arr.slice(0, i), ...arr.slice(i + 1)];
             if (isValidSequence(newArr)) {
