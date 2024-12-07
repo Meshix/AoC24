@@ -1,13 +1,13 @@
 import { readInput } from '../utils/inputReader';
 
 export function solvePart1(input: string): number {
-    let total = 0;
+    let total: number = 0;
 
-    const lines = input.split('\n');
+    const lines: Array<string> = input.split('\n');
     for (const line of lines) {
         const [resultStr, numbersStr] = line.split(': ');
-        const result = parseInt(resultStr);
-        const numbers = numbersStr.split(' ').map(Number);
+        const result: number = parseInt(resultStr);
+        const numbers: Array<number> = numbersStr.split(' ').map(Number);
 
         if (isValid(numbers, result)) {
             total += result;
@@ -19,15 +19,15 @@ export function solvePart1(input: string): number {
     function isValid(numbers: number[], target: number): boolean {
         // For n numbers, we need n-1 operators
         // Each operator can be + or *, so we try all combinations
-        const combinations = 1 << (numbers.length - 1); // 2^(n-1) combinations
+        const combinations: number = 1 << (numbers.length - 1); // 2^(n-1) combinations
 
         for (let i = 0; i < combinations; i++) {
-            let value = numbers[0];
+            let value: number = numbers[0];
             
             // Try this combination of operators
             for (let j = 0; j < numbers.length - 1; j++) {
                 // Check if bit j is set to determine if we use + or *
-                const useAddition = (i & (1 << j)) !== 0;
+                const useAddition: boolean = (i & (1 << j)) !== 0;
                 
                 if (useAddition) {
                     value += numbers[j + 1];
@@ -46,13 +46,13 @@ export function solvePart1(input: string): number {
 }
 
 export function solvePart2(input: string): number {
-    let sum = 0;
+    let sum: number = 0;
 
-    const lines = input.split('\n');
+    const lines: Array<string> = input.split('\n');
     for (const line of lines) {
         const [resultStr, numbersStr] = line.split(': ');
-        const target = parseInt(resultStr);
-        const numbers = numbersStr.split(' ').map(Number);
+        const target: number = parseInt(resultStr);
+        const numbers: Array<number> = numbersStr.split(' ').map(Number);
 
         if (isValid(numbers, target)) {
             sum += target;
@@ -65,16 +65,16 @@ export function solvePart2(input: string): number {
         if (numbers.length === 1) return numbers[0] === target;
         
         // Try all possible operator combinations
-        const numOperators = numbers.length - 1;
-        const combinations = Math.pow(3, numOperators); // 3 operators: +, *, ||
+        const numOperators: number = numbers.length - 1;
+        const combinations: number = Math.pow(3, numOperators); // 3 operators: +, *, ||
 
         for (let i = 0; i < combinations; i++) {
-            let value = numbers[0];
-            let validExpression = true;
+            let value: number = numbers[0];
+            let validExpression: boolean = true;
 
             for (let j = 0; j < numOperators; j++) {
-                const operator = Math.floor((i / Math.pow(3, j)) % 3);
-                const nextNum = numbers[j + 1];
+                const operator: number = Math.floor((i / Math.pow(3, j)) % 3);
+                const nextNum: number = numbers[j + 1];
 
                 switch(operator) {
                     case 0: // Addition
